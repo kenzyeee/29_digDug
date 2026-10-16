@@ -56,8 +56,8 @@ def on_enemy_popped(enemy, score):
 
 
 def enemy_speed_multiplier(level):
-    """Return a speed multiplier for enemies at the given level, or None for the default speed."""
-    pass
+    """Return a positive speed multiplier that increases with the level."""
+    return 1 + 0.1 * max(0, level)
 
 
 def in_bounds(r, c):
