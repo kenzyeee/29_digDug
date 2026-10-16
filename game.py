@@ -23,9 +23,36 @@ def dirt_color(row):
     return (75, 56, 67)
 
 
+import math
+import random
+
+POP_PARTICLES = []
+
 def on_enemy_popped(enemy, score):
-    """Called when an enemy is popped; add particles, bonus points, or a colour flash here."""
-    pass
+    """Create a particle burst at a popped enemy's cell."""
+    row, col = enemy.cell
+    x = col * TILE + TILE // 2
+    y = row * TILE + TILE // 2
+
+    # Scoring has already happened in pump().
+    for _ in range(14):
+        angle = random.uniform(0, 2 * math.pi)
+        speed = random.uniform(45, 125)
+
+        POP_PARTICLES.append({
+            "x": float(x),
+            "y": float(y),
+            "vx": speed * math.cos(angle),
+            "vy": speed * math.sin(angle),
+            "life": random.uniform(0.25, 0.55),
+            "max_life": 0.55,
+            "radius": random.randint(2, 4),
+            "color": random.choice((
+                (255, 220, 100),
+                (255, 145, 70),
+                (255, 245, 205),
+            )),
+        })
 
 
 def enemy_speed_multiplier(level):
