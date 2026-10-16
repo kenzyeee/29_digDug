@@ -31,7 +31,7 @@ def in_bounds(r, c):
 def bfs_path(grid, start, goal):
     queue, parents = deque([start]), {start: None}
     while queue:
-        cell = queue.pop()
+        cell = queue.popleft()  # Fixed: remove the oldest cell first
         if cell == goal:
             break
         for dr, dc in DIRS.values():
@@ -39,14 +39,6 @@ def bfs_path(grid, start, goal):
             if in_bounds(*nxt) and not grid[nxt[0]][nxt[1]] and nxt not in parents:
                 parents[nxt] = cell
                 queue.append(nxt)
-    if goal not in parents:
-        return []
-    path, cell = [], goal
-    while cell != start:
-        path.append(cell)
-        cell = parents[cell]
-    return path[::-1]
-
 
 class Enemy:
     def __init__(self, cell):
